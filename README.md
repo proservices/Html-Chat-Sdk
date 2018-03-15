@@ -78,6 +78,21 @@ The zip file in this repository contains two versions of each included theme:
 
 ## Building from source
 
+`$ npm i`
+
+`$ npm run create`
+
+`$ cd out`
+
+`$ npm i`
+
+Create a button that has an onclick event to `bc.openChat()` like so
+
+```html
+<button onclick="bc.openChat()">Click Me!</button>
+```
+
+
 These files are built using [NPM](https://nodejs.org/) & [Gulp](http://gulpjs.com/). You must install NodeJs as well as gulp. 
 
 The SDK bundle comes with three files to get you started with the build process:

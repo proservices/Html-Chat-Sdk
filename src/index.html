@@ -90,14 +90,14 @@
     var bcLoad = function() {
         if(window.bcLoaded) return;
         window.bcLoaded = true;
-        var vms = document.createElement("script");
-        vms.id="code-thats-created"
-        vms.type = "text/javascript";
-        vms.async = true;
-        vms.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + "vmss.boldchat.com/aid/830746354311429626/bc.vms4/vms.js";
-        console.log(vms.src);
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(vms, s);
+        // var vms = document.createElement("script");
+        // vms.id="code-thats-created"
+        // vms.type = "text/javascript";
+        // vms.async = true;
+        // vms.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + "vmss.boldchat.com/aid/830746354311429626/bc.vms4/vms.js";
+        // console.log(vms.src);
+        // var s = document.getElementsByTagName('script')[0];
+        // s.parentNode.insertBefore(vms, s);
     };
     if(window.pageViewer && pageViewer.load) pageViewer.load();
     else if(document.readyState == "complete") bcLoad();

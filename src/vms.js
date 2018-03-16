@@ -22,17 +22,17 @@
     }());
 
     function a(_window, _document, url) {
-        function k() {
+        function k_initChatWindow() {
             var cookie = _document.cookie;
             var bcCurlStringIndex = cookie.indexOf("_bc-curl=");
             while (bcCurlStringIndex >= 0) {
                 var semiColonStringIndex = cookie.indexOf(";", bcCurlStringIndex + 1);
-                var v = semiColonStringIndex === -1 ? 
+                var bcCurl = semiColonStringIndex === -1 ? 
                     cookie.substring(bcCurlStringIndex + 9) : 
                     cookie.substring(bcCurlStringIndex + 9, semiColonStringIndex);
-                var s = e(v);
-                if (s) {
-                    _window._bcvmw.chatWindow(s, s.id);
+                var s_chatWindowObj = e_newWindow(bcCurl);
+                if (s_chatWindowObj) {
+                    _window._bcvmw.chatWindow(s_chatWindowObj, s_chatWindowObj.id);
                     return true
                 }
                 bcCurlStringIndex = cookie.indexOf("_bc-curl=", bcCurlStringIndex + 9)
@@ -59,7 +59,7 @@
             chatWindow: function (G, B, y) {
                 var _pageViewer = _window.pageViewer;
                 var w, R = null,
-                    x = _window.hideBox || _window.bt_hideAnimationImpl,
+                    x_hideBox = _window.hideBox || _window.bt_hideAnimationImpl,
                     H = G.video && browserType && isChrome && !/^https:/.test(_window.location.protocol),
                     r = H || /(android 2|android 3)/i.test(navigator.userAgent) || /iemobile\/9/i.test(navigator.userAgent) || /(msie 7)/i.test(navigator.userAgent) || /(msie 8|msie 9)/i.test(navigator.userAgent) && document.compatMode !== "CSS1Compat",
                     F = /(msie 6|opera mini|opera mobi.*presto)/i.test(navigator.userAgent),
@@ -102,11 +102,11 @@
                         return
                     }
                 }
-                if (!B && k()) {
+                if (!B && k_initChatWindow()) {
                     return
                 }
-                if (!G.invite && x) {
-                    x(2)
+                if (!G.invite && x_hideBox) {
+                    x_hideBox(2)
                 }
                 if (G.url && !G.invite) {
                     w = G.url
@@ -117,16 +117,16 @@
                     if (K) {
                         w += "&pinid=" + K
                     }
-                    var U = {
+                    var U_parameters = {
                         Language: "lc",
                         Difficulty: "Difficulty",
                         Urgency: "Urgency",
                         CustomUrl: "curl",
                         WindowParameters: null
                     };
-                    for (var Q in U) {
-                        var M = U[Q];
-                        var E = _pageViewer.getParameter(Q, G);
+                    for (var key in U_parameters) {
+                        var M = U_parameters[key];
+                        var E = _pageViewer.getParameter(key, G);
                         if (E) {
                             w += "&" + (M ? M + "=" : "") + E
                         }
@@ -164,8 +164,8 @@
                 R = R || {};
                 var u = w.indexOf("?");
                 var D = u === -1 ? [] : w.substring(u + 1).split("&");
-                for (var Q = 0; Q < D.length; Q++) {
-                    var L = D[Q];
+                for (var key = 0; key < D.length; key++) {
+                    var L = D[key];
                     var s = L.indexOf("=");
                     var X = decodeURIComponent(s === -1 ? L : L.substring(0, s));
                     var O = decodeURIComponent(s === -1 ? "" : L.substring(s + 1));
@@ -282,17 +282,17 @@
                 setTimeout(function () {
                     _window._bcvm.setCookie("_bc-curl", l);
                     _document.location.href = m.replace(/#.*/, "#");
-                    k()
+                    k_initChatWindow()
                 }, 1000);
                 return
             } else {
                 console.error("Invalid Chat URL")
             }
         }
-        k();
+        k_initChatWindow();
 
-        function e(t) {
-            var u = t.split(":");
+        function e_newWindow(bcCurlString) {
+            var u = bcCurlString.split(":");
             if (u.length > 2) {
                 var id = u[0];
                 var cwdid = u[1];
@@ -341,7 +341,7 @@ window._bcvmf = {
             return
         }
         if (d.hideUnsupported) {
-            var m = (function () {
+            var supported = (function () {
                 try {
                     if (typeof navigator === "undefined") {
                         return false
@@ -361,16 +361,16 @@ window._bcvmf = {
                 } catch (x) {}
                 return false
             }());
-            if (!m) {
+            if (!supported) {
                 return
             }
         }
-        var Z = window,
-            j = document,
-            H = j.body,
-            ae = j.documentElement,
-            P = Math.random() + "",
-            ad = function () {
+        var floatButton_window = window,
+            floatButton_document = document,
+            floatButton_body = floatButton_document.body,
+            floatButton_documentElement = floatButton_document.documentElement,
+            randomStringNumber = Math.random() + "",
+            floatButton_now = function () {
                 return new Date().getTime()
             },
             S = d.x,
@@ -382,33 +382,33 @@ window._bcvmf = {
             M = d.fix,
             V = 1000000000,
             N = 1000000000,
-            ag, I, n, an, s, E, D, i, Y = j.getElementById("bcvml"),
+            ag, I, floatButton_image, floatButton_anchorTag, s, E, D, i, Y = floatButton_document.getElementById("bcvml"),
             Q = 1,
             g = 0,
-            B = navigator.userAgent.match(/(iPad|iPhone|iPod)/g),
+            floatButton_mobileAppleUserAgent = navigator.userAgent.match(/(iPad|iPhone|iPod)/g),
             af = /(iphone|ipod|ipad).* os 8_/i.test(navigator.userAgent),
-            t = /Silk/.test(navigator.userAgent),
-            al = /Android/.test(navigator.userAgent) || t,
-            ab = /IEMobile/.test(navigator.userAgent),
-            e = /mobile.*firefox/i.test(navigator.userAgent) || /tablet.*firefox/i.test(navigator.userAgent),
-            U = /Android 4.*WebKit.*Version\/4.0/.test(navigator.userAgent),
-            W = (document.compatMode == "CSS1Compat" && !B && !al && !ab) || e,
+            floatButton_silkUserAgent = /Silk/.test(navigator.userAgent),
+            floatButton_androidUserAgent = /Android/.test(navigator.userAgent) || floatButton_silkUserAgent,
+            floatButton_IEMobileUserAgent = /IEMobile/.test(navigator.userAgent),
+            floatButton_mobileFirefoxUserAgent = /mobile.*firefox/i.test(navigator.userAgent) || /tablet.*firefox/i.test(navigator.userAgent),
+            floatButton_4AndroidWebkitUserAgent = /Android 4.*WebKit.*Version\/4.0/.test(navigator.userAgent),
+            W = (document.compatMode == "CSS1Compat" && !floatButton_mobileAppleUserAgent && !floatButton_androidUserAgent && !floatButton_IEMobileUserAgent) || floatButton_mobileFirefoxUserAgent,
             ac = d.si != null && d.si >= 0,
             am = false,
-            ak = function () {
-                return Math.max(n.width, n.offsetWidth || 0, n.naturalWidth || 0)
+            floatButton_maxImageWidth = function () {
+                return Math.max(floatButton_image.width, floatButton_image.offsetWidth || 0, floatButton_image.naturalWidth || 0)
             },
-            K = function () {
-                return Math.max(n.height, n.offsetHeight || 0, n.naturalHeight || 0)
+            floatButton_maxImageHeight = function () {
+                return Math.max(floatButton_image.height, floatButton_image.offsetHeight || 0, floatButton_image.naturalHeight || 0)
             },
             aa = function () {
-                return aj(((q ? o : 100 - o) / 100 * (A() - Math.min(V, ak()) * Q) + (q ? S : -S)) + (!M || W ? 0 : window.scrollX || window.pageXOffset))
+                return aj(((q ? o : 100 - o) / 100 * (A() - Math.min(V, floatButton_maxImageWidth()) * Q) + (q ? S : -S)) + (!M || W ? 0 : window.scrollX || window.pageXOffset))
             },
             X = function () {
                 if (b()) {
                     return v()
                 } else {
-                    return c((h ? l : 100 - l) / 100 * (O() - Math.min(N, K()) * Q) + (h ? R : -R) + (!M || W ? 0 : window.scrollY || window.pageYOffset))
+                    return c((h ? l : 100 - l) / 100 * (O() - Math.min(N, floatButton_maxImageHeight()) * Q) + (h ? R : -R) + (!M || W ? 0 : window.scrollY || window.pageYOffset))
                 }
             },
             v = function () {
@@ -416,39 +416,39 @@ window._bcvmf = {
             },
             aj = function (x) {
                 var a = x;
-                if (a > document.body.scrollWidth - Math.min(V, ak()) * Q) {
-                    if (a > A() - Math.min(V, ak()) * Q) {
-                        a = document.body.scrollWidth - Math.min(V, ak()) * Q
+                if (a > document.body.scrollWidth - Math.min(V, floatButton_maxImageWidth()) * Q) {
+                    if (a > A() - Math.min(V, floatButton_maxImageWidth()) * Q) {
+                        a = document.body.scrollWidth - Math.min(V, floatButton_maxImageWidth()) * Q
                     }
                 }
                 return a
             },
             c = function (x) {
                 var a = x;
-                if (a > document.body.scrollHeight - Math.min(N, K()) * Q) {
-                    if (a > O() - Math.min(N, K()) * Q) {
-                        a = document.body.scrollHeight - Math.min(N, K()) * Q
+                if (a > document.body.scrollHeight - Math.min(N, floatButton_maxImageHeight()) * Q) {
+                    if (a > O() - Math.min(N, floatButton_maxImageHeight()) * Q) {
+                        a = document.body.scrollHeight - Math.min(N, floatButton_maxImageHeight()) * Q
                     }
                 }
                 return a
             };
 
         function O() {
-            return ((B || al || e) ? window.innerHeight : ((W ^ !M) && ae.clientHeight || H && H.clientHeight) * Q)
+            return ((floatButton_mobileAppleUserAgent || floatButton_androidUserAgent || floatButton_mobileFirefoxUserAgent) ? window.innerHeight : ((W ^ !M) && floatButton_documentElement.clientHeight || floatButton_body && floatButton_body.clientHeight) * Q)
         }
 
         function A() {
-            return ((B || al || e) ? window.innerWidth : ((W ^ !M) && ae.clientWidth || H && H.clientWidth) * Q)
+            return ((floatButton_mobileAppleUserAgent || floatButton_androidUserAgent || floatButton_mobileFirefoxUserAgent) ? window.innerWidth : ((W ^ !M) && floatButton_documentElement.clientWidth || floatButton_body && floatButton_body.clientWidth) * Q)
         }
         var T = function () {
-            if (B || al) {
+            if (floatButton_mobileAppleUserAgent || floatButton_androidUserAgent) {
                 G()
             }
-            I.style.width = ak() + "px";
-            I.style.height = K() + "px";
+            I.style.width = floatButton_maxImageWidth() + "px";
+            I.style.height = floatButton_maxImageHeight() + "px";
             if (!ac) {
-                ag.style.width = ak() + "px";
-                ag.style.height = K() + "px"
+                ag.style.width = floatButton_maxImageWidth() + "px";
+                ag.style.height = floatButton_maxImageHeight() + "px"
             }
             E = aa();
             D = X();
@@ -464,7 +464,7 @@ window._bcvmf = {
         };
 
         function G() {
-            if (B || al) {
+            if (floatButton_mobileAppleUserAgent || floatButton_androidUserAgent) {
                 if (ai()) {
                     Q = window.innerWidth / Math.max(screen.width, screen.height)
                 } else {
@@ -480,14 +480,14 @@ window._bcvmf = {
                 ag.style.transformOrigin = a + " left";
                 ag.style.webkitTransform = "scale(" + Q + ")";
                 ag.style.webkitTransformOrigin = a + " left";
-                W = (document.compatMode == "CSS1Compat" && (!B && !al || window.innerWidth == document.body.scrollWidth) && !ab) || e;
+                W = (document.compatMode == "CSS1Compat" && (!floatButton_mobileAppleUserAgent && !floatButton_androidUserAgent || window.innerWidth == document.body.scrollWidth) && !floatButton_IEMobileUserAgent) || floatButton_mobileFirefoxUserAgent;
                 k()
             }
             g = Q
         }
 
         function ai() {
-            if (B && typeof window.orientation !== "undefined") {
+            if (floatButton_mobileAppleUserAgent && typeof window.orientation !== "undefined") {
                 return (Math.abs(window.orientation) === 90)
             } else {
                 if (document.documentElement && document.documentElement.clientWidth) {
@@ -499,22 +499,22 @@ window._bcvmf = {
         }
 
         function b() {
-            return W && M && !h && e
+            return W && M && !h && floatButton_mobileFirefoxUserAgent
         }
 
         function k() {
             ag.style.position = W && M ? "fixed" : "absolute"
         }
-        ag = j.createElement("div");
-        I = j.createElement("div");
-        n = new Image();
-        an = j.createElement("a");
+        ag = floatButton_document.createElement("div");
+        I = floatButton_document.createElement("div");
+        floatButton_image = new Image();
+        floatButton_anchorTag = floatButton_document.createElement("a");
         ag.setAttribute("class", "bcFloat");
         ag.style.display = "none";
         I.style.position = "absolute";
-        an.setAttribute("href", "#");
-        an.onclick = function () {
-            Z._bcvmw.chatWindow(d);
+        floatButton_anchorTag.setAttribute("href", "#");
+        floatButton_anchorTag.onclick = function () {
+            floatButton_window._bcvmw.chatWindow(d);
             return false
         };
         if (ac) {
@@ -536,25 +536,25 @@ window._bcvmf = {
                 am = true;
                 var a = V,
                     ao = N,
-                    y = Math.min(1, (ad() - J) / z),
-                    x = C ? ak() : w || ak(),
-                    ap = C ? K() : r || K();
+                    y = Math.min(1, (floatButton_now() - J) / z),
+                    x = C ? floatButton_maxImageWidth() : w || floatButton_maxImageWidth(),
+                    ap = C ? floatButton_maxImageHeight() : r || floatButton_maxImageHeight();
                 if (C) {
                     y = 1 - y
                 }
                 y = u(y);
-                V = y * Math.min(ak(), w || ak()) + (1 - y) * ak();
-                N = y * Math.min(K(), r || K()) + (1 - y) * K();
+                V = y * Math.min(floatButton_maxImageWidth(), w || floatButton_maxImageWidth()) + (1 - y) * floatButton_maxImageWidth();
+                N = y * Math.min(floatButton_maxImageHeight(), r || floatButton_maxImageHeight()) + (1 - y) * floatButton_maxImageHeight();
                 ag.style.width = V + "px";
                 ag.style.height = N + "px";
                 if (q) {
-                    I.style.marginLeft = (V - ak()) + "px"
+                    I.style.marginLeft = (V - floatButton_maxImageWidth()) + "px"
                 }
                 if (h) {
-                    I.style.marginTop = (N - K()) + "px"
+                    I.style.marginTop = (N - floatButton_maxImageHeight()) + "px"
                 } else {
                     if (b()) {
-                        I.style.marginBottom = (N - K()) + "px"
+                        I.style.marginBottom = (N - floatButton_maxImageHeight()) + "px"
                     }
                 }
                 if (V != x || N != ap) {
@@ -580,7 +580,7 @@ window._bcvmf = {
                 am = false
             };
             I.onmouseover = function () {
-                J = ad() - z * (1 - Math.min(1, (ad() - J) / z));
+                J = floatButton_now() - z * (1 - Math.min(1, (floatButton_now() - J) / z));
                 C = 1;
                 if (L) {
                     clearTimeout(L)
@@ -588,7 +588,7 @@ window._bcvmf = {
                 L = setTimeout(s, p)
             };
             I.onmouseout = function () {
-                J = ad() - z * (1 - Math.min(1, (ad() - J) / z));
+                J = floatButton_now() - z * (1 - Math.min(1, (floatButton_now() - J) / z));
                 C = 0;
                 if (L) {
                     clearTimeout(L)
@@ -597,13 +597,13 @@ window._bcvmf = {
             }
         }
         ag.appendChild(I);
-        I.appendChild(an);
-        an.appendChild(n);
+        I.appendChild(floatButton_anchorTag);
+        floatButton_anchorTag.appendChild(floatButton_image);
         _bcvmf.divs.push(ag);
-        n.setAttribute("id", P);
-        n.setAttribute("border", 0);
-        n.setAttribute("alt", d.altText);
-        n.onload = function () {
+        floatButton_image.setAttribute("id", randomStringNumber);
+        floatButton_image.setAttribute("border", 0);
+        floatButton_image.setAttribute("alt", d.altText);
+        floatButton_image.onload = function () {
             ag.style.textAlign = "left";
             ag.style.zIndex = 3141591;
             ag.style.overflow = "hidden";
@@ -612,29 +612,29 @@ window._bcvmf = {
             ag.style.display = "block";
             _bcvmf.updateFloatVisibility()
         };
-        n.src = d.img;
-        if (B || al) {
+        floatButton_image.src = d.img;
+        if (floatButton_mobileAppleUserAgent || floatButton_androidUserAgent) {
             ag.style.transition = "all 0.2s linear";
             ag.style.WebkitTransition = "all 0.2s linear"
         }
 
         function f() {
             try {
-                j.body.appendChild(ag)
+                floatButton_document.body.appendChild(ag)
             } catch (a) {
                 try {
-                    j.body.insertBefore(ag, j.body.firstChild)
+                    floatButton_document.body.insertBefore(ag, floatButton_document.body.firstChild)
                 } catch (a) {
                     setTimeout(f, 1000);
                     return
                 }
             }
-            H = j.body;
+            floatButton_body = floatButton_document.body;
             T()
         }
         f();
-        _bcvm.addEvent(Z, "resize", T);
-        if (B || (al && !U)) {
+        _bcvm.addEvent(floatButton_window, "resize", T);
+        if (floatButton_mobileAppleUserAgent || (floatButton_androidUserAgent && !floatButton_4AndroidWebkitUserAgent)) {
             function ah() {
                 var a = !W || !M;
                 if (a) {
@@ -648,7 +648,7 @@ window._bcvmf = {
                     T()
                 }, 500)
             }
-            _bcvm.addEvent(Z, "orientationchange", ah)
+            _bcvm.addEvent(floatButton_window, "orientationchange", ah)
         }
 
         function F() {
@@ -656,12 +656,12 @@ window._bcvmf = {
                 T()
             }, 500)
         }
-        _bcvm.addEvent(Z, "touchend", F);
-        _bcvm.addEvent(Z, "scroll", T);
-        if (Z.pageViewer && pageViewer.addButton) {
+        _bcvm.addEvent(floatButton_window, "touchend", F);
+        _bcvm.addEvent(floatButton_window, "scroll", T);
+        if (floatButton_window.pageViewer && pageViewer.addButton) {
             pageViewer.addButton({
                 parents: [ag],
-                id: P,
+                id: randomStringNumber,
                 bdid: d.bdid,
                 type: d.type,
                 roid: d.roid,
@@ -700,7 +700,7 @@ window._bcvmb = {
             return
         }
         if (e.hideUnsupported) {
-            var n = (function () {
+            var isSupported = (function () {
                 try {
                     if (typeof navigator === "undefined") {
                         return false
@@ -720,7 +720,7 @@ window._bcvmb = {
                 } catch (i) {}
                 return false
             }());
-            if (!n) {
+            if (!isSupported) {
                 return
             }
         }
@@ -875,12 +875,12 @@ window._bcvmt = {
         c = function (j) {
             return d(g_document.location.href, j, "&")
         },
-        a = function (l) {
-            var m = {};
-            for (var j in l) {
-                m[j] = l[j]
+        a_copyObject = function (obj) {
+            var newObj = {};
+            for (var key in obj) {
+                newObj[key] = obj[key]
             }
-            return m
+            return newObj
         };
     host = ".boldchat.com/aid/";
     e_window._bcvm = e_window._bcvm || {
@@ -913,9 +913,9 @@ window._bcvmt = {
         },
         textButtons: {},
         getPageViewer: function (E) {
-            var I = setTimeout,
-                l = clearTimeout,
-                aF = new Image(),
+            var I_setTimeout = setTimeout,
+                l_clearTimeout = clearTimeout,
+                aF_Image = new Image(),
                 C = [],
                 H = 0,
                 ac = new Image(),
@@ -928,11 +928,11 @@ window._bcvmt = {
                 L, aU, an = false,
                 p, ag = false,
                 aR = {},
-                aq = {},
+                aq_buttons = {},
                 D = "",
                 z = "",
                 al = "",
-                aj, af, aQ, v, ad, aJ = "",
+                aj, af_visitorID, aQ, v, ad, aJ = "",
                 am, ab, aM, aL = "SecureParameters",
                 A = {
                     VisitRef: "vr",
@@ -969,63 +969,63 @@ window._bcvmt = {
                     ConversionRef: "cr",
                     ConversionInfo: "ci"
                 },
-                J = {},
+                J_parameters = {},
                 G = {},
                 ae = function () {
                     return Math.floor(parseFloat(E) * 99 / 1000000 + (now() - 1332800000000) + Math.random() * 1000000) + "" + Math.floor(1000 + Math.random() * (10000 - 1000))
                 },
-                x = function (aV) {
+                x_setDomain = function (aV) {
                     e_window._bcvm.domain = aV
                 },
-                q = function (aV) {
+                q_setPath = function (aV) {
                     e_window._bcvm.path = aV
                 },
-                Z = function (aW, aV, aX) {
+                Z_set = function (aW, aV, aX) {
                     p = aX;
-                    aJ = ak("wdid", aP("WebsiteDefID") || aP("WebsiteID")) + ak("pvid", p);
+                    aJ = ak("wdid", aP_getParameter("WebsiteDefID") || aP_getParameter("WebsiteID")) + ak("pvid", p);
                     aG(aW, aV);
                     M = true;
-                    n()
+                    n_load()
                 },
                 aG = function (aW, aV) {
-                    aQ = aP("WebsiteDefID") || aP("WebsiteID") || E;
+                    aQ = aP_getParameter("WebsiteDefID") || aP_getParameter("WebsiteID") || E;
                     v = "_bcvm_vid_" + aQ;
                     ad = "_bcvm_vrid_" + aQ;
                     aj = aV || ah && getCookie(v) || c(v) || aj;
-                    af = aW || ah && getCookie(ad) || c(ad) || af;
+                    af_visitorID = aW || ah && getCookie(ad) || c(ad) || af_visitorID;
                     if (aj && ah) {
                         setCookie(v, aj)
                     }
-                    if (af && ah) {
-                        setCookie(ad, af, 365 * 86400000)
+                    if (af_visitorID && ah) {
+                        setCookie(ad, af_visitorID, 365 * 86400000)
                     }
                 },
                 aa = function (aW, aV) {
                     aG();
                     var aX = aW.indexOf("#");
-                    return aW.substring(0, aX == -1 ? aW.length : aX) + (aW.indexOf("?") == -1 ? "?" : "") + (ah ? ak("_bcvm_vrid_", "true") : "") + ak(v, aj) + ak(ad, af) + (aV ? "" : ak("curl", J.CustomUrl) + "&" + (J.WindowParameters || "")) + (aX == -1 ? "" : aW.substring(aX))
+                    return aW.substring(0, aX == -1 ? aW.length : aX) + (aW.indexOf("?") == -1 ? "?" : "") + (ah ? ak("_bcvm_vrid_", "true") : "") + ak(v, aj) + ak(ad, af_visitorID) + (aV ? "" : ak("curl", J_parameters.CustomUrl) + "&" + (J_parameters.WindowParameters || "")) + (aX == -1 ? "" : aW.substring(aX))
                 },
-                u = function (aW, aV) {
+                u_link = function (aW, aV) {
                     for (var aX = 0; aX < aS.length; aX++) {
                         aW = aS[aX](aW, aV)
                     }
                     return aW
                 },
                 aS = [aa],
-                az = function (aV) {
+                az_addLink = function (aV) {
                     aS.push(aV)
                 },
-                P = function (aV) {
+                P_removeLink = function (aV) {
                     for (var aW = 0; aW < aS.length; aW++) {
                         if (aS[aW] == aV) {
                             aS.splice(aW, 1)
                         }
                     }
                 },
-                ai = function () {
+                ai_doExperiments = function () {
                     return p
                 },
-                m = function (aV) {
+                m_setAccountID = function (aV) {
                     E = aV;
                     e_window._bcvm.host = host + E
                 },
@@ -1061,16 +1061,16 @@ window._bcvmt = {
                     }
                     return a0
                 },
-                aE = function (aX, aV, aW) {
-                    J[aX] = aW ? aV : T(J[aX], aV, j[aX])
+                aE_setParameter = function (aX, aV, aW) {
+                    J_parameters[aX] = aW ? aV : T(J_parameters[aX], aV, j[aX])
                 },
-                aP = function (aX, aW) {
-                    var aV = (aW ? aW[aX] : null) || (aW && aW.id && G[aW.id] ? G[aW.id]["parameters"][aX] : null) || J[aX] || "";
+                aP_getParameter = function (aX_key, aW) {
+                    var aV = (aW ? aW[aX_key] : null) || (aW && aW.id && G[aW.id] ? G[aW.id]["parameters"][aX_key] : null) || J_parameters[aX_key] || "";
                     return aV
                 },
-                aA = function (a1, aX) {
+                aA_getWindowParameter = function (a1, aX) {
                     var aW = {};
-                    var a0 = aP("WindowParameters", aX);
+                    var a0 = aP_getParameter("WindowParameters", aX);
                     if (a0 && a0.length) {
                         var aZ = a0.split(j.WindowParameters);
                         for (var aV = 0; aV < aZ.length; aV++) {
@@ -1078,7 +1078,7 @@ window._bcvmt = {
                             aW[aY[0] && decodeURIComponent(aY[0])] = aY[1] && decodeURIComponent(aY[1])
                         }
                     }
-                    return aP(a1, aX) || aW[a1] || aW[A[a1]] || aW[at[a1]]
+                    return aP_getParameter(a1, aX) || aW[a1] || aW[A[a1]] || aW[at[a1]]
                 },
                 ak = function (aX, aV, aW) {
                     return aV && aV != "" ? (aW ? "?" : "&") + aX + "=" + (encodeURIComponent || escape)(typeof aV == "function" ? aV() : aV) : ""
@@ -1086,36 +1086,36 @@ window._bcvmt = {
                 aN = function (aY, aX) {
                     var aW = "",
                         aV;
-                    for (var aZ in aY) {
-                        aW += ak(aY[aZ], aP(aZ, aX))
+                    for (var aZ_key in aY) {
+                        aW += ak(aY[aZ_key], aP_getParameter(aZ_key, aX))
                     }
                     return aW
                 },
-                ap = function () {
+                ap_beforeUnloadEvent = function () {
                     setCookie("bc_pv_end", p, 30000)
                 },
-                N = function () {
+                N_focusEvent = function () {
                     an = false;
                     var aV = ax() - (now() - aU - H);
                     if (L) {
-                        l(L);
+                        l_clearTimeout(L);
                         L = null;
                         if (aV > 0) {
-                            L = I(aw, aV)
+                            L = I_setTimeout(aw, aV)
                         } else {
                             Q()
                         }
                     }
                 },
-                w = function () {
+                w_blurEvent = function () {
                     an = true
                 },
                 k = {
                     id: "pageView"
                 },
-                o = function (aW, aV) {
+                o = function (ftid, visitIndicator) {
                     H = 0;
-                    _bcvm.loadScript("https://ci" + host + E + "/bc.inv/ci.js?resize=true&std=" + (document.compatMode == "CSS1Compat") + "&ftid=" + aW + "&visit=" + aV + aJ + aN(at, k) + "&" + now())
+                    _bcvm.loadScript("https://ci" + host + E + "/bc.inv/ci.js?resize=true&std=" + (document.compatMode == "CSS1Compat") + "&ftid=" + ftid + "&visit=" + visitIndicator + aJ + aN(at, k) + "&" + now())
                 },
                 aT = false,
                 y = function () {
@@ -1144,7 +1144,7 @@ window._bcvmt = {
                         y()
                     }
                 },
-                S = function (aZ, aW, a0, aY) {
+                S_update = function (aZ, aW, a0, aY) {
                     var aV = aR[aZ] && aR[aZ].elements || [g_document.getElementById(aZ)],
                         a1, a2 = !aW ? "" : aR[aZ] && aR[aZ][aW];
                     if (aR[aZ] && aR[aZ].obj) {
@@ -1161,70 +1161,70 @@ window._bcvmt = {
                         }
                     }
                 },
-                aO = function (aY) {
-                    var aX = aq[aY];
+                aO_removeButton = function (id) {
+                    var aX = aq_buttons[id];
                     if (aX) {
-                        var aV = aX.parents;
-                        for (var aW = 0; aV && aW < aV.length; aW++) {
-                            aV[aW].parentNode.removeChild(aV[aW])
+                        var parents = aX.parents;
+                        for (var i = 0; parents && i < parents.length; i++) {
+                            parents[i].parentNode.removeChild(parents[i])
                         }
                         delete aR[aX.id];
-                        delete aq[aY]
+                        delete aq_buttons[id]
                     }
                 },
                 R = function (aV) {
                     var aW = aV.id;
                     return ak("bdid", aW) + ak(aW + "_html", aV.html) + ak(aW + "_roid", aV.roid) + ak(aW + "_rdid", aV.rdid) + ak(aW + (aV.tbid ? "_tbid" : aV.type == "call" ? "_pbdid" : "_cbdid"), aV.tbid || aV.bdid)
                 },
-                X = function (aW, aV) {
+                X_addButton = function (aW, aV) {
                     if (aV) {
                         aR[aW.id] = aW;
-                        aq[aW.eid || aW.bdid || aW.tbid] = aW
+                        aq_buttons[aW.eid || aW.bdid || aW.tbid] = aW
                     } else {
                         D += R(aW)
                     }
                 },
-                aH = function (aW) {
+                aH_addFloat = function (aW) {
                     var aV = (aW.type == "call" ? "&fpbdid=" : "&fcbdid=") + aW.id;
                     al = U(aW, aV);
-                    aC(aW.id, J, aV)
+                    aC_setParametersAndQuery(aW.id, J_parameters, aV)
                 },
-                aB = function (aV, aW) {
+                aB_addExperimentButton = function (aV, aW) {
                     if (!G[aV.id] && G[aW]) {
                         G[aV.id] = G[aW]
                     }
                 },
-                av = function (aW) {
+                av_addStatic = function (aW) {
                     var aV = (aW.type == "call" ? "&spbdid=" : "&scbdid=") + aW.bdid + "," + aW.id;
                     al = U(aW, aV);
-                    aC(aW.id, J, aV)
+                    aC_setParametersAndQuery(aW.id, J_parameters, aV)
                 },
-                W = function (aW) {
-                    var aV = (aW.type == "call" ? "&tpwdid=" : "&tcwdid=") + aW.id + "," + (aW.window || "") + "," + (aW.department || "") + "," + (aW.operator || "");
-                    al = U(aW, aV);
-                    aC(aW.id, J, aV);
-                    _bcvm.textButtons[aW.id] = aW
+                W_addText = function (aW_button) {
+                    var aV_query = (aW_button.type == "call" ? "&tpwdid=" : "&tcwdid=") + aW_button.id + "," + (aW_button.window || "") + "," + (aW_button.department || "") + "," + (aW_button.operator || "");
+                    al = U(aW_button, aV_query);
+                    aC_setParametersAndQuery(aW_button.id, J_parameters, aV_query);
+                    _bcvm.textButtons[aW_button.id] = aW_button
                 },
                 au = function () {
-                    var aW = aF.width & 7,
-                        aV = aF.height;
-                    F(aV, aW)
+                    var aW = aF_Image.width & 7,
+                        aV = aF_Image.height;
+                    F_check(aV, aW)
                 },
-                aD = null,
-                F = function (aV, aW) {
+                aD_timeoutID = null,
+                F_check = function (aV, aW) {
                     if (aW == 2) {
-                        l(L);
+                        l_clearTimeout(L);
                         L = null
                     }
                     if (aW == 3) {
-                        V(am, "")
+                        V_pageViewed(am, "")
                     }
                     if (aW >= 4) {
-                        if (aD) {
-                            l(aD)
+                        if (aD_timeoutID) {
+                            l_clearTimeout(aD_timeoutID)
                         }
-                        aD = I(function () {
-                            aD = null;
+                        aD_timeoutID = I_setTimeout(function () {
+                            aD_timeoutID = null;
                             o(aW == 4 ? 29 : 51, "false")
                         }, (aV - 1) * 1000 + 1)
                     }
@@ -1241,21 +1241,21 @@ window._bcvmt = {
                     for (var aY in aR) {
                         aV += R(aR[aY])
                     }
-                    var aX = u(ar + "vmp" + host + E + "/bc.vm?blur=" + an + "&poll=" + (5000 + 2 * ax()) + aJ + aV + D + "&" + now());
+                    var aX = u_link(ar + "vmp" + host + E + "/bc.vm?blur=" + an + "&poll=" + (5000 + 2 * ax()) + aJ + aV + D + "&" + now());
                     if (aV || D) {
                         _bcvm.loadScript(aX.replace("?", "?script=true&"))
                     } else {
-                        aF.src = aX
+                        aF_Image.src = aX
                     }
                     if (!aW) {
-                        L = I(aw, ax())
+                        L = I_setTimeout(aw, ax())
                     }
                 },
-                K = function (aV, aW) {
-                    V(null, null, aV, aW)
+                K_reinvite = function (aV, aW) {
+                    V_pageViewed(null, null, aV, aW)
                 },
                 M = true,
-                n = function () {
+                n_load = function () {
                     var aZ = e_window._bcvma || [],
                         aW = aZ.length || 0;
                     e_window._bcvma = [];
@@ -1264,7 +1264,7 @@ window._bcvmt = {
                             aY = (a1 || [])[0];
                         if (aY == "pageViewed" && aX < aW) {
                             G[k.id] = {
-                                parameters: a(J)
+                                parameters: a_copyObject(J_parameters)
                             };
                             aZ.push(a1)
                         } else {
@@ -1275,38 +1275,38 @@ window._bcvmt = {
                         }
                     }
                     if (al != z) {
-                        V(null, null, null, null, true)
+                        V_pageViewed(null, null, null, null, true)
                     }
                     if (M) {
                         var a0 = e_window._bcct || [];
                         e_window._bcct = [];
                         for (var aX = 0; aX < a0.length; aX++) {
-                            s(a0[aX])
+                            s_conversion(a0[aX])
                         }
                     }
                 },
-                ay = function (aV) {
+                ay_addConversion = function (aV) {
                     e_window._bcct = e_window._bcct || [];
                     e_window._bcct.push(aV)
                 },
-                s = function (aX, aZ, aW) {
+                s_conversion = function (aX, aZ, aW) {
                     if (aZ && aX[aL]) {
                         return true
                     }
                     for (var aY in t) {
-                        aE(aY, null, true)
+                        aE_setParameter(aY, null, true)
                     }
                     for (var aY in aX) {
                         if (aX[aY] && aX[aY] != "") {
-                            aE(aY, aX[aY])
+                            aE_setParameter(aY, aX[aY])
                         }
                     }
                     if (!aW) {
-                        aW = aP(aL)
+                        aW = aP_getParameter(aL)
                     }
                     if (typeof aW == "function") {
                         aW = aW(function (a0) {
-                            s(aX, aZ, a0)
+                            s_conversion(aX, aZ, a0)
                         }, "conversion");
                         if (!aW) {
                             return
@@ -1314,7 +1314,7 @@ window._bcvmt = {
                     }
                     if (!aZ) {
                         var aV = new Image();
-                        aV.src = u(ar + "vms" + host + E + "/bc.vci?" + now() + (aJ || ak("wdid", aP("WebsiteDefID") || aP("WebsiteID"))) + aN(A) + aN(t) + ak("secured", aW));
+                        aV.src = u_link(ar + "vms" + host + E + "/bc.vci?" + now() + (aJ || ak("wdid", aP_getParameter("WebsiteDefID") || aP_getParameter("WebsiteID"))) + aN(A) + aN(t) + ak("secured", aW));
                         C.push(aV)
                     }
                 },
@@ -1341,13 +1341,13 @@ window._bcvmt = {
                     } catch (a0) {}
                     return aZ
                 },
-                V = function (aW, a4, aX, a5, a1, aZ) {
+                V_pageViewed = function (aW, a4, aX, a5, a1, aZ) {
                     if (!aZ) {
-                        aZ = aP(aL, k)
+                        aZ = aP_getParameter(aL, k)
                     }
                     if (typeof aZ == "function") {
                         aZ = aZ(function (a7) {
-                            V(aW, a4, aX, a5, a1, a7)
+                            V_pageViewed(aW, a4, aX, a5, a1, a7)
                         }, "visit");
                         if (!aZ) {
                             return
@@ -1372,31 +1372,31 @@ window._bcvmt = {
                     H = 0;
                     aU = now();
                     if (L && !a1) {
-                        l(L)
+                        l_clearTimeout(L)
                     }
-                    var a2 = a0[0] && s(a0[0], true);
+                    var a2 = a0[0] && s_conversion(a0[0], true);
                     if (a0[0] && !a2) {
                         e_window._bcct = a0.splice(1)
                     }
-                    aF.onload = au;
+                    aF_Image.onload = au;
                     if (!aX && !a1) {
                         p = null
                     }
-                    aJ = ak("wdid", aP("WebsiteDefID", k) || aP("WebsiteID", k)) + ak("pvid", p);
-                    var aV = u(ar + "vms" + host + E + "/bc.pv?blur=" + an + "&vm=" + !a1 + "&poll=" + (5000 + 2 * ax()) + aI() + (aX ? ak("reinvite", aX) + ak("adi", a5) : ak("vpvid", c("vpvid")) + ak("pve", a6) + ak("url", am) + ak("referrer", aM) + aN(A, k)) + ak("secured", aZ) + aJ + aN(at, k) + (a2 ? "" : aN(t)) + "&" + now());
+                    aJ = ak("wdid", aP_getParameter("WebsiteDefID", k) || aP_getParameter("WebsiteID", k)) + ak("pvid", p);
+                    var aV = u_link(ar + "vms" + host + E + "/bc.pv?blur=" + an + "&vm=" + !a1 + "&poll=" + (5000 + 2 * ax()) + aI() + (aX ? ak("reinvite", aX) + ak("adi", a5) : ak("vpvid", c("vpvid")) + ak("pve", a6) + ak("url", am) + ak("referrer", aM) + aN(A, k)) + ak("secured", aZ) + aJ + aN(at, k) + (a2 ? "" : aN(t)) + "&" + now());
                     _bcvm.loadScript(aV.replace("?", "?script=true&securevm=true&") + (aX ? "" : "&hasbutton=" + ag + al));
                     z = al;
                     if (!a1) {
-                        L = I(aw, ax())
+                        L = I_setTimeout(aw, ax())
                     }
                 },
-                r = function (aV) {
+                r_setCustomChatWindow = function (aV) {
                     if (_bcvmw) {
                         _bcvmw.customChatWindow = aV
                     }
                 },
-                O = function () {
-                    return af
+                O_getVisitorID = function () {
+                    return af_visitorID
                 };
 
             function U(aW, aV) {
@@ -1404,53 +1404,53 @@ window._bcvmt = {
                 return aX + aV
             }
 
-            function B(aW) {
+            function B(aW_id) {
                 var aX = al;
-                if (G[aW]) {
-                    var aY = G[aW].query;
-                    var aV = new RegExp(aY + "(?=&|$)");
+                if (G[aW_id]) {
+                    var aY_query = G[aW_id].query;
+                    var aV = new RegExp(aY_query + "(?=&|$)");
                     aX = aX.replace(aV, "")
                 }
                 return aX
             }
 
-            function aC(aW, aX, aV) {
-                G[aW] = {
-                    parameters: a(aX),
-                    id: aW,
-                    query: aV
+            function aC_setParametersAndQuery(id, parameters, query) {
+                G[id] = {
+                    parameters: a_copyObject(parameters),
+                    id: id,
+                    query: query
                 }
             }
-            _bcvm.addEvent(e_window, "beforeunload", ap);
-            _bcvm.addEvent(e_window, "focus", N);
-            _bcvm.addEvent(e_window, "blur", w);
+            _bcvm.addEvent(e_window, "beforeunload", ap_beforeUnloadEvent);
+            _bcvm.addEvent(e_window, "focus", N_focusEvent);
+            _bcvm.addEvent(e_window, "blur", w_blurEvent);
             _bcvm.pageViewer = {
-                set: Z,
-                doExperiments: ai,
-                setAccountID: m,
-                setDomain: x,
-                setPath: q,
-                pageViewed: V,
-                load: n,
-                reinvite: K,
-                check: F,
-                getParameter: aP,
-                getWindowParameter: aA,
-                setParameter: aE,
-                setCustomChatWindow: r,
-                getVisitorID: O,
-                addFloat: aH,
-                addStatic: av,
-                addText: W,
-                addButton: X,
-                removeButton: aO,
-                update: S,
-                addExperimentButton: aB,
-                addConversion: ay,
-                conversion: s,
-                link: u,
-                removeLink: P,
-                addLink: az
+                set: Z_set,
+                doExperiments: ai_doExperiments,
+                setAccountID: m_setAccountID,
+                setDomain: x_setDomain,
+                setPath: q_setPath,
+                pageViewed: V_pageViewed,
+                load: n_load,
+                reinvite: K_reinvite,
+                check: F_check,
+                getParameter: aP_getParameter,
+                getWindowParameter: aA_getWindowParameter,
+                setParameter: aE_setParameter,
+                setCustomChatWindow: r_setCustomChatWindow,
+                getVisitorID: O_getVisitorID,
+                addFloat: aH_addFloat,
+                addStatic: av_addStatic,
+                addText: W_addText,
+                addButton: X_addButton,
+                removeButton: aO_removeButton,
+                update: S_update,
+                addExperimentButton: aB_addExperimentButton,
+                addConversion: ay_addConversion,
+                conversion: s_conversion,
+                link: u_link,
+                removeLink: P_removeLink,
+                addLink: az_addLink
             };
             return _bcvm.pageViewer
         },
@@ -1484,10 +1484,10 @@ window._bcvmt = {
                 var n = [g_document],
                     A = L.split(" ");
                 SPACE: for (var K = 0, u = A.length; k = A[K], K < u; K++) {
-                    var t = k.indexOf("["),
-                        r = k.indexOf("]"),
-                        s = k.indexOf("#");
-                    if (s + 1 && !(s > t && s < r)) {
+                    var leftBracketIndex = k.indexOf("["),
+                        rightBracketIndex = k.indexOf("]"),
+                        hashTagIndex = k.indexOf("#");
+                    if (hashTagIndex + 1 && !(hashTagIndex > leftBracketIndex && hashTagIndex < rightBracketIndex)) {
                         var E = k.split("#"),
                             O = E[0],
                             B = E[1],
@@ -1498,8 +1498,8 @@ window._bcvmt = {
                         n = [x];
                         continue SPACE
                     }
-                    s = k.indexOf(".");
-                    if (s + 1 && !(s > t && s < r)) {
+                    hashTagIndex = k.indexOf(".");
+                    if (hashTagIndex + 1 && !(hashTagIndex > leftBracketIndex && hashTagIndex < rightBracketIndex)) {
                         var E = k.split("."),
                             O = E[0],
                             I = E[1];

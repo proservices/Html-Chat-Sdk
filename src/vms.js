@@ -56,21 +56,21 @@
             return r && parseInt(r[2], 10) >= 47
         }());
         _window._bcvmw = {
-            chatWindow: function (G, B, y) {
+            chatWindow: function (G_Configuration, B, y) {
                 var _pageViewer = _window.pageViewer;
-                var w, R = null,
+                var w_FormActionUrl, R_HiddenInputs = null,
                     x_hideBox = _window.hideBox || _window.bt_hideAnimationImpl,
-                    H = G.video && browserType && isChrome && !/^https:/.test(_window.location.protocol),
+                    H = G_Configuration.video && browserType && isChrome && !/^https:/.test(_window.location.protocol),
                     r = H || /(android 2|android 3)/i.test(navigator.userAgent) || /iemobile\/9/i.test(navigator.userAgent) || /(msie 7)/i.test(navigator.userAgent) || /(msie 8|msie 9)/i.test(navigator.userAgent) && document.compatMode !== "CSS1Compat",
                     F = /(msie 6|opera mini|opera mobi.*presto)/i.test(navigator.userAgent),
-                    t = _pageViewer && _pageViewer.getParameter("OverrideLayer", G) === "true",
-                    z = r || F || _pageViewer && _pageViewer.getParameter("OverridePopup", G) === "true";
+                    t = _pageViewer && _pageViewer.getParameter("OverrideLayer", G_Configuration) === "true",
+                    z = r || F || _pageViewer && _pageViewer.getParameter("OverridePopup", G_Configuration) === "true";
                 if (!y && !B) {
-                    y = _pageViewer && _pageViewer.getParameter("SecureParameters", G)
+                    y = _pageViewer && _pageViewer.getParameter("SecureParameters", G_Configuration)
                 }
                 if (typeof y === "function") {
                     y = y(function (v) {
-                        _window._bcvmw.chatWindow(G, B, v)
+                        _window._bcvmw.chatWindow(G_Configuration, B, v)
                     }, "chat");
                     if (!y) {
                         return
@@ -78,24 +78,24 @@
                 }
                 if (_window._bcvmw.customChatWindow) {
                     var T = {
-                        button: G.bdid,
-                        queueToken: G.token,
+                        button: G_Configuration.bdid,
+                        queueToken: G_Configuration.token,
                         url: _document.location.href,
-                        customUrl: _pageViewer && _pageViewer.getWindowParameter("CustomUrl", G),
+                        customUrl: _pageViewer && _pageViewer.getWindowParameter("CustomUrl", G_Configuration),
                         secure: y,
                         visitor: _pageViewer && _pageViewer.getVisitorID(),
-                        forcePopup: !G.embed && !t || z,
-                        width: (_pageViewer.getWindowParameter("ChatWidth", G) || G.width || "640"),
-                        height: (_pageViewer.getWindowParameter("ChatHeight", G) || G.height || "480"),
-                        language: _pageViewer && _pageViewer.getWindowParameter("Language", G)
+                        forcePopup: !G_Configuration.embed && !t || z,
+                        width: (_pageViewer.getWindowParameter("ChatWidth", G_Configuration) || G_Configuration.width || "640"),
+                        height: (_pageViewer.getWindowParameter("ChatHeight", G_Configuration) || G_Configuration.height || "480"),
+                        language: _pageViewer && _pageViewer.getWindowParameter("Language", G_Configuration)
                     };
                     var A = {
-                        reference: _pageViewer && _pageViewer.getWindowParameter("VisitRef", G),
-                        information: _pageViewer && _pageViewer.getWindowParameter("VisitInfo", G),
-                        name: G.name || (_pageViewer && _pageViewer.getWindowParameter("VisitName", G)),
-                        phone: _pageViewer && _pageViewer.getWindowParameter("VisitPhone", G),
-                        email: G.email || (_pageViewer && _pageViewer.getWindowParameter("VisitEmail", G)),
-                        initial_question: G.initialQuestion || (_pageViewer && _pageViewer.getWindowParameter("InitialQuestion", G))
+                        reference: _pageViewer && _pageViewer.getWindowParameter("VisitRef", G_Configuration),
+                        information: _pageViewer && _pageViewer.getWindowParameter("VisitInfo", G_Configuration),
+                        name: G_Configuration.name || (_pageViewer && _pageViewer.getWindowParameter("VisitName", G_Configuration)),
+                        phone: _pageViewer && _pageViewer.getWindowParameter("VisitPhone", G_Configuration),
+                        email: G_Configuration.email || (_pageViewer && _pageViewer.getWindowParameter("VisitEmail", G_Configuration)),
+                        initial_question: G_Configuration.initialQuestion || (_pageViewer && _pageViewer.getWindowParameter("InitialQuestion", G_Configuration))
                     };
                     var P = _window._bcvmw.customChatWindow(T, A);
                     if (typeof P === "undefined" || P) {
@@ -105,17 +105,17 @@
                 if (!B && k_initChatWindow()) {
                     return
                 }
-                if (!G.invite && x_hideBox) {
+                if (!G_Configuration.invite && x_hideBox) {
                     x_hideBox(2)
                 }
-                if (G.url && !G.invite) {
-                    w = G.url
+                if (G_Configuration.url && !G_Configuration.invite) {
+                    w_FormActionUrl = G_Configuration.url
                 } else {
-                    w = G.url || "https://livechat" + _window._bcvm.host + "/bc." + G.type + "?resize=true" + (G.bdid ? "&cbdid=" + G.bdid : (G.cwdid ? "&cwdid=" + G.cwdid : "")) + "&wdid=" + (_pageViewer.getParameter("WebsiteDefID", G) || _pageViewer.getParameter("WebsiteID", G)) + "&url=" + (_window.encodeURIComponent || _window.escape)(_document.location.href);
-                    w += (G.token ? "&queueToken=" + G.token : "");
-                    var K = _pageViewer.getParameter("PinvitationID", G);
+                    w_FormActionUrl = G_Configuration.url || "https://livechat" + _window._bcvm.host + "/bc." + G_Configuration.type + "?resize=true" + (G_Configuration.bdid ? "&cbdid=" + G_Configuration.bdid : (G_Configuration.cwdid ? "&cwdid=" + G_Configuration.cwdid : "")) + "&wdid=" + (_pageViewer.getParameter("WebsiteDefID", G_Configuration) || _pageViewer.getParameter("WebsiteID", G_Configuration)) + "&url=" + (_window.encodeURIComponent || _window.escape)(_document.location.href);
+                    w_FormActionUrl += (G_Configuration.token ? "&queueToken=" + G_Configuration.token : "");
+                    var K = _pageViewer.getParameter("PinvitationID", G_Configuration);
                     if (K) {
-                        w += "&pinid=" + K
+                        w_FormActionUrl += "&pinid=" + K
                     }
                     var U_parameters = {
                         Language: "lc",
@@ -126,120 +126,120 @@
                     };
                     for (var key in U_parameters) {
                         var M = U_parameters[key];
-                        var E = _pageViewer.getParameter(key, G);
+                        var E = _pageViewer.getParameter(key, G_Configuration);
                         if (E) {
-                            w += "&" + (M ? M + "=" : "") + E
+                            w_FormActionUrl += "&" + (M ? M + "=" : "") + E
                         }
                     }
-                    w += (G.rdid ? "&rdid=" + G.rdid : "") + (G.roid ? "&roid=" + G.roid : "");
-                    w += (G.group ? "&group=" + G.group : "");
+                    w_FormActionUrl += (G_Configuration.rdid ? "&rdid=" + G_Configuration.rdid : "") + (G_Configuration.roid ? "&roid=" + G_Configuration.roid : "");
+                    w_FormActionUrl += (G_Configuration.group ? "&group=" + G_Configuration.group : "");
                     if (_pageViewer && _pageViewer.link) {
-                        w = _pageViewer.link(w, true)
+                        w_FormActionUrl = _pageViewer.link(w_FormActionUrl, true)
                     }
                 }
                 if (y) {
-                    R = R || {
+                    R_HiddenInputs = R_HiddenInputs || {
                         localsecured: [],
                         secured: [],
                         hash: []
                     };
-                    R.secured.push(y)
+                    R_HiddenInputs.secured.push(y)
                 }
-                if (G.secured || G.localsecured) {
-                    R = R || {
+                if (G_Configuration.secured || G_Configuration.localsecured) {
+                    R_HiddenInputs = R_HiddenInputs || {
                         localsecured: [],
                         secured: [],
                         hash: []
                     };
-                    if (G.secured) {
-                        R.secured.push(G.secured)
+                    if (G_Configuration.secured) {
+                        R_HiddenInputs.secured.push(G_Configuration.secured)
                     }
-                    if (G.hash) {
-                        R.hash.push(G.hash)
+                    if (G_Configuration.hash) {
+                        R_HiddenInputs.hash.push(G_Configuration.hash)
                     }
-                    if (G.localsecured) {
-                        R.localsecured.push(G.localsecured)
+                    if (G_Configuration.localsecured) {
+                        R_HiddenInputs.localsecured.push(G_Configuration.localsecured)
                     }
                 }
-                R = R || {};
-                var u = w.indexOf("?");
-                var D = u === -1 ? [] : w.substring(u + 1).split("&");
-                for (var key = 0; key < D.length; key++) {
-                    var L = D[key];
-                    var s = L.indexOf("=");
-                    var X = decodeURIComponent(s === -1 ? L : L.substring(0, s));
-                    var O = decodeURIComponent(s === -1 ? "" : L.substring(s + 1));
-                    R[X] = R[X] || [];
-                    R[X].push(O)
+                R_HiddenInputs = R_HiddenInputs || {};
+                var u_IndexOfQuestionMark = w_FormActionUrl.indexOf("?");
+                var D_FormActionUrlParameters = u_IndexOfQuestionMark === -1 ? [] : w_FormActionUrl.substring(u_IndexOfQuestionMark + 1).split("&");
+                for (var key = 0; key < D_FormActionUrlParameters.length; key++) {
+                    var L_Parameter = D_FormActionUrlParameters[key];
+                    var s_EqualityIndex = L_Parameter.indexOf("=");
+                    var X_ParameterName = decodeURIComponent(s_EqualityIndex === -1 ? L_Parameter : L_Parameter.substring(0, s_EqualityIndex));
+                    var O_ParameterValue = decodeURIComponent(s_EqualityIndex === -1 ? "" : L_Parameter.substring(s_EqualityIndex + 1));
+                    R_HiddenInputs[X_ParameterName] = R_HiddenInputs[X_ParameterName] || [];
+                    R_HiddenInputs[X_ParameterName].push(O_ParameterValue)
                 }
-                w = u === -1 ? w : w.substring(0, u);
+                w_FormActionUrl = u_IndexOfQuestionMark === -1 ? w_FormActionUrl : w_FormActionUrl.substring(0, u_IndexOfQuestionMark);
                 var S = function (ac, v) {
-                    w = ac ? w.replace(/bc\.chat/, "mobilechat/visitor.jsp") + (F ? "&pt=9" : "") : w;
+                    w_FormActionUrl = ac ? w_FormActionUrl.replace(/bc\.chat/, "mobilechat/visitor.jsp") + (F ? "&pt=9" : "") : w_FormActionUrl;
                     if (v) {
-                        w = ac ? w.replace(/bc\.chat/, "mobilechat/visitor.jsp") + (F ? "&pt=9" : "") : w;
-                        if (_window.bcConfig && _window.bcConfig.cid && !(/&cid=/.test(w))) {
-                            w = w + "&cid=" + _window.bcConfig.cid
+                        w_FormActionUrl = ac ? w_FormActionUrl.replace(/bc\.chat/, "mobilechat/visitor.jsp") + (F ? "&pt=9" : "") : w_FormActionUrl;
+                        if (_window.bcConfig && _window.bcConfig.cid && !(/&cid=/.test(w_FormActionUrl))) {
+                            w_FormActionUrl = w_FormActionUrl + "&cid=" + _window.bcConfig.cid
                         }
                     }
-                    var Z = R ? "about:blank" : w,
-                        af = G.type + G.bdid;
-                    if (/OS X.*CriOS.*Mobile/i.test(navigator.userAgent) && G.invite) {
-                        _window.open(Z, af)
+                    var Z = R_HiddenInputs ? "about:blank" : w_FormActionUrl,
+                        af_FormTarget = G_Configuration.type + G_Configuration.bdid;
+                    if (/OS X.*CriOS.*Mobile/i.test(navigator.userAgent) && G_Configuration.invite) {
+                        _window.open(Z, af_FormTarget)
                     } else {
-                        _window.open(Z, af, (G.open || (_pageViewer && _pageViewer.getParameter("OpenParameters", G)) || "toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1") + ",width=" + ((_pageViewer && _pageViewer.getParameter("ChatWidth", G)) || G.width || "640") + ",height=" + ((_pageViewer && _pageViewer.getParameter("ChatHeight", G)) || G.height || "480"))
+                        _window.open(Z, af_FormTarget, (G_Configuration.open || (_pageViewer && _pageViewer.getParameter("OpenParameters", G_Configuration)) || "toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1") + ",width=" + ((_pageViewer && _pageViewer.getParameter("ChatWidth", G_Configuration)) || G_Configuration.width || "640") + ",height=" + ((_pageViewer && _pageViewer.getParameter("ChatHeight", G_Configuration)) || G_Configuration.height || "480"))
                     }
-                    if (R) {
-                        var Y = _document.createElement("form");
-                        Y.target = af;
-                        Y.method = "post";
-                        Y.action = w;
-                        for (var ab in R) {
-                            for (var aa = 0; aa < R[ab].length; aa++) {
-                                var ae = _document.createElement("input");
-                                ae.type = "hidden";
-                                ae.name = ab;
-                                ae.value = R[ab][aa];
-                                Y.appendChild(ae)
+                    if (R_HiddenInputs) {
+                        var Y_Form = _document.createElement("form");
+                        Y_Form.target = af_FormTarget;
+                        Y_Form.method = "post";
+                        Y_Form.action = w_FormActionUrl;
+                        for (var ab_Name in R_HiddenInputs) {
+                            for (var aa_ValueIndex = 0; aa_ValueIndex < R_HiddenInputs[ab_Name].length; aa_ValueIndex++) {
+                                var ae_HiddenInput = _document.createElement("input");
+                                ae_HiddenInput.type = "hidden";
+                                ae_HiddenInput.name = ab_Name;
+                                ae_HiddenInput.value = R_HiddenInputs[ab_Name][aa_ValueIndex];
+                                Y_Form.appendChild(ae_HiddenInput)
                             }
                         }
-                        var ad = function () {
+                        var ad_SubmitForm = function () {
                             try {
-                                _document.body.appendChild(Y)
+                                _document.body.appendChild(Y_Form)
                             } catch (ah) {
                                 try {
-                                    _document.body.insertBefore(Y, _document.body.firstChild)
+                                    _document.body.insertBefore(Y_Form, _document.body.firstChild)
                                 } catch (ag) {
-                                    setTimeout(ad, 1000);
+                                    setTimeout(ad_SubmitForm, 1000);
                                     return
                                 }
                             }
-                            Y.submit()
+                            Y_Form.submit()
                         };
-                        ad()
+                        ad_SubmitForm()
                     }
                 };
 
                 function W(v) {
                     S(v, true)
                 }
-                if (G.launchType === "nanorep") {
-                    h(G.url, G.cwdid, B)
+                if (G_Configuration.launchType === "nanorep") {
+                    h(G_Configuration.url, G_Configuration.cwdid, B)
                 } else {
-                    if (!G.embed && !t || z) {
-                        S(G.embed || t)
+                    if (!G_Configuration.embed && !t || z) {
+                        S(G_Configuration.embed || t)
                     } else {
                         var I = B || (Math.floor(Math.random() * 1000000000) + "" + Math.floor(Math.random() * 1000000000));
-                        var C = w.replace(/bc\.chat.*/, "").replace(/mobilechat.*/, "") + "mobilechat/launcher.jsp?v=" + (G.version || "1") + (G.cwdid ? "&cwdid=" + G.cwdid : "") + "&cid=" + I;
-                        var V = G.url && !G.invite ? w : w.replace(/bc.chat/, "mobilechat/visitor.jsp");
+                        var C = w_FormActionUrl.replace(/bc\.chat.*/, "").replace(/mobilechat.*/, "") + "mobilechat/launcher.jsp?v=" + (G_Configuration.version || "1") + (G_Configuration.cwdid ? "&cwdid=" + G_Configuration.cwdid : "") + "&cid=" + I;
+                        var V = G_Configuration.url && !G_Configuration.invite ? w_FormActionUrl : w_FormActionUrl.replace(/bc.chat/, "mobilechat/visitor.jsp");
                         _window.bcConfig = _window.bcConfig || {};
                         _window.bcConfig.frame = true;
-                        _window.bcConfig.aid = w.match(/\/aid\/([0-9]+)\//)[1];
+                        _window.bcConfig.aid = w_FormActionUrl.match(/\/aid\/([0-9]+)\//)[1];
                         _window.bcConfig.cid = B;
-                        _window.bcConfig.cwdid = G.cwdid || "";
+                        _window.bcConfig.cwdid = G_Configuration.cwdid || "";
                         _window.bcConfig.obj = {
                             url: V,
                             hostUrl: _document.location.href,
-                            post: R
+                            post: R_HiddenInputs
                         };
                         _window.bcConfig.loader = C.replace(/launcher.jsp.*/, "loader.jsp");
                         _window.bcConfig.launchPopup = S;
@@ -252,10 +252,10 @@
                 }
             }
         };
-        var m = _document.location.href;
-        var g = m.indexOf("#reboot-cid=");
-        if (g !== -1) {
-            var i = (_window.decodeURIComponent || _window.unescape)(m.substring(g + 12)).split(":");
+        var m_PageUrl = _document.location.href;
+        var g_BCCurlParamIndex = m_PageUrl.indexOf("#reboot-cid=");
+        if (g_BCCurlParamIndex !== -1) {
+            var i = (_window.decodeURIComponent || _window.unescape)(m_PageUrl.substring(g_BCCurlParamIndex + 12)).split(":");
             if (i.length > 1) {
                 var j = null;
                 if (i.length > 7) {
@@ -271,17 +271,17 @@
                     }, i[0])
                 }, 1000)
             }
-            _document.location.href = m.replace(/#.*/, "#");
+            _document.location.href = m_PageUrl.replace(/#.*/, "#");
             return
         }
-        m = _document.location.href;
-        g = m.indexOf("#bc-curl=");
-        if (g !== -1) {
-            var l = (_window.decodeURIComponent || _window.unescape)(m.substring(g + 9));
+        m_PageUrl = _document.location.href;
+        g_BCCurlParamIndex = m_PageUrl.indexOf("#bc-curl=");
+        if (g_BCCurlParamIndex !== -1) {
+            var l = (_window.decodeURIComponent || _window.unescape)(m_PageUrl.substring(g_BCCurlParamIndex + 9));
             if (doesURLHaveBoldHost(l)) {
                 setTimeout(function () {
                     _window._bcvm.setCookie("_bc-curl", l);
-                    _document.location.href = m.replace(/#.*/, "#");
+                    _document.location.href = m_PageUrl.replace(/#.*/, "#");
                     k_initChatWindow()
                 }, 1000);
                 return
@@ -382,9 +382,9 @@ window._bcvmf = {
             M = d.fix,
             V = 1000000000,
             N = 1000000000,
-            ag, I, floatButton_image, floatButton_anchorTag, s, E, D, i, Y = floatButton_document.getElementById("bcvml"),
-            Q = 1,
-            g = 0,
+            ag_FloatButton, I, floatButton_image, floatButton_anchorTag, s, E_LeftPixels, D_VerticalPixels, i, Y = floatButton_document.getElementById("bcvml"),
+            Q_InnerWidthScale = 1,
+            g_CurrentInnerWidthScale = 0,
             floatButton_mobileAppleUserAgent = navigator.userAgent.match(/(iPad|iPhone|iPod)/g),
             af = /(iphone|ipod|ipad).* os 8_/i.test(navigator.userAgent),
             floatButton_silkUserAgent = /Silk/.test(navigator.userAgent),
@@ -392,7 +392,7 @@ window._bcvmf = {
             floatButton_IEMobileUserAgent = /IEMobile/.test(navigator.userAgent),
             floatButton_mobileFirefoxUserAgent = /mobile.*firefox/i.test(navigator.userAgent) || /tablet.*firefox/i.test(navigator.userAgent),
             floatButton_4AndroidWebkitUserAgent = /Android 4.*WebKit.*Version\/4.0/.test(navigator.userAgent),
-            W = (document.compatMode == "CSS1Compat" && !floatButton_mobileAppleUserAgent && !floatButton_androidUserAgent && !floatButton_IEMobileUserAgent) || floatButton_mobileFirefoxUserAgent,
+            W_isMobileUser = (document.compatMode == "CSS1Compat" && !floatButton_mobileAppleUserAgent && !floatButton_androidUserAgent && !floatButton_IEMobileUserAgent) || floatButton_mobileFirefoxUserAgent,
             ac = d.si != null && d.si >= 0,
             am = false,
             floatButton_maxImageWidth = function () {
@@ -401,14 +401,14 @@ window._bcvmf = {
             floatButton_maxImageHeight = function () {
                 return Math.max(floatButton_image.height, floatButton_image.offsetHeight || 0, floatButton_image.naturalHeight || 0)
             },
-            aa = function () {
-                return aj(((q ? o : 100 - o) / 100 * (A() - Math.min(V, floatButton_maxImageWidth()) * Q) + (q ? S : -S)) + (!M || W ? 0 : window.scrollX || window.pageXOffset))
+            aa_GetFloatButtonLeftPixels = function () {
+                return aj(((q ? o : 100 - o) / 100 * (A() - Math.min(V, floatButton_maxImageWidth()) * Q_InnerWidthScale) + (q ? S : -S)) + (!M || W_isMobileUser ? 0 : window.scrollX || window.pageXOffset))
             },
-            X = function () {
+            X_GetVerticalPixels = function () {
                 if (b()) {
                     return v()
                 } else {
-                    return c((h ? l : 100 - l) / 100 * (O() - Math.min(N, floatButton_maxImageHeight()) * Q) + (h ? R : -R) + (!M || W ? 0 : window.scrollY || window.pageYOffset))
+                    return c((h ? l : 100 - l) / 100 * (O() - Math.min(N, floatButton_maxImageHeight()) * Q_InnerWidthScale) + (h ? R : -R) + (!M || W_isMobileUser ? 0 : window.scrollY || window.pageYOffset))
                 }
             },
             v = function () {
@@ -416,77 +416,77 @@ window._bcvmf = {
             },
             aj = function (x) {
                 var a = x;
-                if (a > document.body.scrollWidth - Math.min(V, floatButton_maxImageWidth()) * Q) {
-                    if (a > A() - Math.min(V, floatButton_maxImageWidth()) * Q) {
-                        a = document.body.scrollWidth - Math.min(V, floatButton_maxImageWidth()) * Q
+                if (a > document.body.scrollWidth - Math.min(V, floatButton_maxImageWidth()) * Q_InnerWidthScale) {
+                    if (a > A() - Math.min(V, floatButton_maxImageWidth()) * Q_InnerWidthScale) {
+                        a = document.body.scrollWidth - Math.min(V, floatButton_maxImageWidth()) * Q_InnerWidthScale
                     }
                 }
                 return a
             },
             c = function (x) {
                 var a = x;
-                if (a > document.body.scrollHeight - Math.min(N, floatButton_maxImageHeight()) * Q) {
-                    if (a > O() - Math.min(N, floatButton_maxImageHeight()) * Q) {
-                        a = document.body.scrollHeight - Math.min(N, floatButton_maxImageHeight()) * Q
+                if (a > document.body.scrollHeight - Math.min(N, floatButton_maxImageHeight()) * Q_InnerWidthScale) {
+                    if (a > O() - Math.min(N, floatButton_maxImageHeight()) * Q_InnerWidthScale) {
+                        a = document.body.scrollHeight - Math.min(N, floatButton_maxImageHeight()) * Q_InnerWidthScale
                     }
                 }
                 return a
             };
 
         function O() {
-            return ((floatButton_mobileAppleUserAgent || floatButton_androidUserAgent || floatButton_mobileFirefoxUserAgent) ? window.innerHeight : ((W ^ !M) && floatButton_documentElement.clientHeight || floatButton_body && floatButton_body.clientHeight) * Q)
+            return ((floatButton_mobileAppleUserAgent || floatButton_androidUserAgent || floatButton_mobileFirefoxUserAgent) ? window.innerHeight : ((W_isMobileUser ^ !M) && floatButton_documentElement.clientHeight || floatButton_body && floatButton_body.clientHeight) * Q_InnerWidthScale)
         }
 
         function A() {
-            return ((floatButton_mobileAppleUserAgent || floatButton_androidUserAgent || floatButton_mobileFirefoxUserAgent) ? window.innerWidth : ((W ^ !M) && floatButton_documentElement.clientWidth || floatButton_body && floatButton_body.clientWidth) * Q)
+            return ((floatButton_mobileAppleUserAgent || floatButton_androidUserAgent || floatButton_mobileFirefoxUserAgent) ? window.innerWidth : ((W_isMobileUser ^ !M) && floatButton_documentElement.clientWidth || floatButton_body && floatButton_body.clientWidth) * Q_InnerWidthScale)
         }
         var T = function () {
             if (floatButton_mobileAppleUserAgent || floatButton_androidUserAgent) {
-                G()
+                G_OrientApplication()
             }
             I.style.width = floatButton_maxImageWidth() + "px";
             I.style.height = floatButton_maxImageHeight() + "px";
             if (!ac) {
-                ag.style.width = floatButton_maxImageWidth() + "px";
-                ag.style.height = floatButton_maxImageHeight() + "px"
+                ag_FloatButton.style.width = floatButton_maxImageWidth() + "px";
+                ag_FloatButton.style.height = floatButton_maxImageHeight() + "px"
             }
-            E = aa();
-            D = X();
-            ag.style.left = E + "px";
+            E_LeftPixels = aa_GetFloatButtonLeftPixels();
+            D_VerticalPixels = X_GetVerticalPixels();
+            ag_FloatButton.style.left = E_LeftPixels + "px";
             if (b()) {
-                ag.style.bottom = D + "px"
+                ag_FloatButton.style.bottom = D_VerticalPixels + "px"
             } else {
-                ag.style.top = D + "px"
+                ag_FloatButton.style.top = D_VerticalPixels + "px"
             }
             if (ac) {
                 s(true)
             }
         };
 
-        function G() {
+        function G_OrientApplication() {
             if (floatButton_mobileAppleUserAgent || floatButton_androidUserAgent) {
-                if (ai()) {
-                    Q = window.innerWidth / Math.max(screen.width, screen.height)
+                if (ai_IsLandscapeOrientation()) {
+                    Q_InnerWidthScale = window.innerWidth / Math.max(screen.width, screen.height)
                 } else {
-                    Q = window.innerWidth / Math.min(screen.width, screen.height)
+                    Q_InnerWidthScale = window.innerWidth / Math.min(screen.width, screen.height)
                 }
             }
-            if (g !== Q) {
+            if (g_CurrentInnerWidthScale !== Q_InnerWidthScale) {
                 var a = "top";
                 if (b()) {
                     a = "bottom"
                 }
-                ag.style.transform = "scale(" + Q + ")";
-                ag.style.transformOrigin = a + " left";
-                ag.style.webkitTransform = "scale(" + Q + ")";
-                ag.style.webkitTransformOrigin = a + " left";
-                W = (document.compatMode == "CSS1Compat" && (!floatButton_mobileAppleUserAgent && !floatButton_androidUserAgent || window.innerWidth == document.body.scrollWidth) && !floatButton_IEMobileUserAgent) || floatButton_mobileFirefoxUserAgent;
-                k()
+                ag_FloatButton.style.transform = "scale(" + Q_InnerWidthScale + ")";
+                ag_FloatButton.style.transformOrigin = a + " left";
+                ag_FloatButton.style.webkitTransform = "scale(" + Q_InnerWidthScale + ")";
+                ag_FloatButton.style.webkitTransformOrigin = a + " left";
+                W_isMobileUser = (document.compatMode == "CSS1Compat" && (!floatButton_mobileAppleUserAgent && !floatButton_androidUserAgent || window.innerWidth == document.body.scrollWidth) && !floatButton_IEMobileUserAgent) || floatButton_mobileFirefoxUserAgent;
+                k_SetFloatButtonPosition()
             }
-            g = Q
+            g_CurrentInnerWidthScale = Q_InnerWidthScale
         }
 
-        function ai() {
+        function ai_IsLandscapeOrientation() {
             if (floatButton_mobileAppleUserAgent && typeof window.orientation !== "undefined") {
                 return (Math.abs(window.orientation) === 90)
             } else {
@@ -499,18 +499,18 @@ window._bcvmf = {
         }
 
         function b() {
-            return W && M && !h && floatButton_mobileFirefoxUserAgent
+            return W_isMobileUser && M && !h && floatButton_mobileFirefoxUserAgent
         }
 
-        function k() {
-            ag.style.position = W && M ? "fixed" : "absolute"
+        function k_SetFloatButtonPosition() {
+            ag_FloatButton.style.position = W_isMobileUser && M ? "fixed" : "absolute"
         }
-        ag = floatButton_document.createElement("div");
+        ag_FloatButton = floatButton_document.createElement("div");
         I = floatButton_document.createElement("div");
         floatButton_image = new Image();
         floatButton_anchorTag = floatButton_document.createElement("a");
-        ag.setAttribute("class", "bcFloat");
-        ag.style.display = "none";
+        ag_FloatButton.setAttribute("class", "bcFloat");
+        ag_FloatButton.style.display = "none";
         I.style.position = "absolute";
         floatButton_anchorTag.setAttribute("href", "#");
         floatButton_anchorTag.onclick = function () {
@@ -545,8 +545,8 @@ window._bcvmf = {
                 y = u(y);
                 V = y * Math.min(floatButton_maxImageWidth(), w || floatButton_maxImageWidth()) + (1 - y) * floatButton_maxImageWidth();
                 N = y * Math.min(floatButton_maxImageHeight(), r || floatButton_maxImageHeight()) + (1 - y) * floatButton_maxImageHeight();
-                ag.style.width = V + "px";
-                ag.style.height = N + "px";
+                ag_FloatButton.style.width = V + "px";
+                ag_FloatButton.style.height = N + "px";
                 if (q) {
                     I.style.marginLeft = (V - floatButton_maxImageWidth()) + "px"
                 }
@@ -563,18 +563,18 @@ window._bcvmf = {
                     }
                     L = setTimeout(s, p)
                 }
-                E += a - V;
+                E_LeftPixels += a - V;
                 if (!b()) {
-                    D += ao - N
+                    D_VerticalPixels += ao - N
                 }
                 if (V != a && !q) {
-                    ag.style.left = E + "px"
+                    ag_FloatButton.style.left = E_LeftPixels + "px"
                 }
                 if (N != ao && !h) {
                     if (b()) {
-                        ag.style.bottom = D + "px"
+                        ag_FloatButton.style.bottom = D_VerticalPixels + "px"
                     } else {
-                        ag.style.top = D + "px"
+                        ag_FloatButton.style.top = D_VerticalPixels + "px"
                     }
                 }
                 am = false
@@ -596,34 +596,34 @@ window._bcvmf = {
                 L = setTimeout(s, p)
             }
         }
-        ag.appendChild(I);
+        ag_FloatButton.appendChild(I);
         I.appendChild(floatButton_anchorTag);
         floatButton_anchorTag.appendChild(floatButton_image);
-        _bcvmf.divs.push(ag);
+        _bcvmf.divs.push(ag_FloatButton);
         floatButton_image.setAttribute("id", randomStringNumber);
         floatButton_image.setAttribute("border", 0);
         floatButton_image.setAttribute("alt", d.altText);
         floatButton_image.onload = function () {
-            ag.style.textAlign = "left";
-            ag.style.zIndex = 3141591;
-            ag.style.overflow = "hidden";
-            k();
+            ag_FloatButton.style.textAlign = "left";
+            ag_FloatButton.style.zIndex = 3141591;
+            ag_FloatButton.style.overflow = "hidden";
+            k_SetFloatButtonPosition();
             T();
-            ag.style.display = "block";
+            ag_FloatButton.style.display = "block";
             _bcvmf.updateFloatVisibility()
         };
         floatButton_image.src = d.img;
         if (floatButton_mobileAppleUserAgent || floatButton_androidUserAgent) {
-            ag.style.transition = "all 0.2s linear";
-            ag.style.WebkitTransition = "all 0.2s linear"
+            ag_FloatButton.style.transition = "all 0.2s linear";
+            ag_FloatButton.style.WebkitTransition = "all 0.2s linear"
         }
 
         function f() {
             try {
-                floatButton_document.body.appendChild(ag)
+                floatButton_document.body.appendChild(ag_FloatButton)
             } catch (a) {
                 try {
-                    floatButton_document.body.insertBefore(ag, floatButton_document.body.firstChild)
+                    floatButton_document.body.insertBefore(ag_FloatButton, floatButton_document.body.firstChild)
                 } catch (a) {
                     setTimeout(f, 1000);
                     return
@@ -636,14 +636,14 @@ window._bcvmf = {
         _bcvm.addEvent(floatButton_window, "resize", T);
         if (floatButton_mobileAppleUserAgent || (floatButton_androidUserAgent && !floatButton_4AndroidWebkitUserAgent)) {
             function ah() {
-                var a = !W || !M;
+                var a = !W_isMobileUser || !M;
                 if (a) {
-                    ag.style.position = "fixed"
+                    ag_FloatButton.style.position = "fixed"
                 }
                 T();
                 setTimeout(function () {
                     if (a) {
-                        k()
+                        k_SetFloatButtonPosition()
                     }
                     T()
                 }, 500)
@@ -660,7 +660,7 @@ window._bcvmf = {
         _bcvm.addEvent(floatButton_window, "scroll", T);
         if (floatButton_window.pageViewer && pageViewer.addButton) {
             pageViewer.addButton({
-                parents: [ag],
+                parents: [ag_FloatButton],
                 id: randomStringNumber,
                 bdid: d.bdid,
                 type: d.type,
@@ -692,14 +692,16 @@ window._bcvmf = {
     }
 };
 window._bcvmb = {
-    button: function (e) {
+    //e_element is either an object that has a reference to an element string,
+    //or it is an element itself
+    button: function (e_element) {
         if (window.pageViewer && pageViewer.removeButton) {
-            pageViewer.removeButton(e.id || e.bdid)
+            pageViewer.removeButton(e_element.id || e_element.bdid)
         }
-        if (!e.img) {
+        if (!e_element.img) {
             return
         }
-        if (e.hideUnsupported) {
+        if (e_element.hideUnsupported) {
             var isSupported = (function () {
                 try {
                     if (typeof navigator === "undefined") {
@@ -726,56 +728,56 @@ window._bcvmb = {
         }
         var g__window = window,
             m__document = document,
-            b, h = !e.id ? _bcvm.select(e.element) : [m__document.getElementById(e.id)],
-            c = Math.random() + "",
-            f, l, o = function () {
-                g__window._bcvmw.chatWindow(e);
+            b, h = !e_element.id ? _bcvm.select(e_element.element) : [m__document.getElementById(e_element.id)],
+            c_id = Math.random() + "",
+            f_element, l_buttonLink, o_buttonLinkOnClick = function () {
+                g__window._bcvmw.chatWindow(e_element);
                 return false
             },
-            k = [],
-            j = [];
+            k_elements = [],
+            j_parentElements = [];
         for (var d = 0; d < h.length; d++) {
             b = h[d];
-            l = m__document.createElement("a");
+            l_buttonLink = m__document.createElement("a");
             b.className = (b.className + " " || "") + "bcStatic";
-            l.setAttribute("href", "#");
-            l.onclick = o;
-            if (!e.html) {
-                f = new Image();
-                f.setAttribute("border", 0);
-                f.setAttribute("alt", e.altText);
-                f.src = e.img
+            l_buttonLink.setAttribute("href", "#");
+            l_buttonLink.onclick = o_buttonLinkOnClick;
+            if (!e_element.html) {
+                f_element = new Image();
+                f_element.setAttribute("border", 0);
+                f_element.setAttribute("alt", e_element.altText);
+                f_element.src = e_element.img
             } else {
-                f = m__document.createElement("div");
-                f.innerHTML = !e.img ? "" : e[e.img]
+                f_element = m__document.createElement("div");
+                f_element.innerHTML = !e_element.img ? "" : e_element[e_element.img]
             }
-            k.push(f);
-            l.appendChild(f);
-            j.push(l);
-            b.appendChild(l)
+            k_elements.push(f_element);
+            l_buttonLink.appendChild(f_element);
+            j_parentElements.push(l_buttonLink);
+            b.appendChild(l_buttonLink)
         }
         if (g__window.pageViewer && pageViewer.addButton) {
             pageViewer.addButton({
-                parents: j,
-                id: c,
-                eid: e.id,
-                tbid: e.html ? e.bdid : null,
-                html: e.html,
-                available: e.available,
-                unavailable: e.unavailable,
-                elements: k,
-                bdid: e.bdid,
-                type: e.type,
-                roid: e.roid,
-                rdid: e.rdid,
-                obj: e
+                parents: j_parentElements,
+                id: c_id,
+                eid: e_element.id,
+                tbid: e_element.html ? e_element.bdid : null,
+                html: e_element.html,
+                available: e_element.available,
+                unavailable: e_element.unavailable,
+                elements: k_elements,
+                bdid: e_element.bdid,
+                type: e_element.type,
+                roid: e_element.roid,
+                rdid: e_element.rdid,
+                obj: e_element
             }, true)
         }
         if (window.pageViewer.addExperimentButton) {
             window.pageViewer.addExperimentButton({
-                id: e.id,
-                type: e.type
-            }, e.originalButtonId)
+                id: e_element.id,
+                type: e_element.type
+            }, e_element.originalButtonId)
         }
     }
 };
@@ -794,8 +796,8 @@ window._bcvmt = {
                         return false
                     } else {
                         if (false && navigator.mozGetUserMedia) {
-                            var a = parseInt(navigator.userAgent.match(/Firefox\/([0-9]+)\./)[1], 10);
-                            return a >= 38
+                            var firefoxVersion = parseInt(navigator.userAgent.match(/Firefox\/([0-9]+)\./)[1], 10);
+                            return firefoxVersion >= 38
                         } else {
                             if (navigator.webkitGetUserMedia) {
                                 return !(/(iPad|iPhone|iPod)/g).test(navigator.userAgent)
@@ -812,25 +814,25 @@ window._bcvmt = {
         if (!d.available) {
             return
         }
-        var g = window,
-            j = document,
-            b = j.getElementById(d.id),
+        var g_window = window,
+            j_document = document,
+            b = j_document.getElementById(d.id),
             c = Math.random() + "",
-            i, h = j.createElement("div"),
-            f = g._bcvm.textButtons[d.id],
+            i, h = j_document.createElement("div"),
+            f = g_window._bcvm.textButtons[d.id],
             e = f && f[d.available];
-        i = j.createElement("a");
+        i = j_document.createElement("a");
         b.setAttribute("class", "bcText");
         i.setAttribute("href", "#");
         i.onclick = function () {
-            g._bcvmw.chatWindow(d);
+            g_window._bcvmw.chatWindow(d);
             return false
         };
         h.setAttribute("id", c);
         h.innerHTML = e;
         i.appendChild(h);
         b.appendChild(i);
-        if (g.pageViewer && pageViewer.addButton) {
+        if (g_window.pageViewer && pageViewer.addButton) {
             pageViewer.addButton({
                 parents: [i],
                 id: c,
@@ -850,7 +852,7 @@ window._bcvmt = {
     var now = function () {
             return new Date().getTime()
         },
-        d = function (m, k, j) {
+        getQueryParameters = function (m, k, j) {
             var n, l = m.indexOf(k + "=");
             if (l != -1) {
                 l += k.length + 1;
@@ -859,7 +861,7 @@ window._bcvmt = {
             }
         },
         getCookie = function (j) {
-            return d(g_document.cookie, j, ";")
+            return getQueryParameters(g_document.cookie, j, ";")
         },
         setCookie = function (k, n, p) {
             var j = p && new Date(now() + p),
@@ -873,7 +875,7 @@ window._bcvmt = {
             g_document.cookie = k + "=" + n + (p ? ";expires=" + j.toUTCString() : "") + ";domain=" + (e_window._bcvm.domain || l) + ";path=" + (e_window._bcvm.path || "/")
         },
         c = function (j) {
-            return d(g_document.location.href, j, "&")
+            return getQueryParameters(g_document.location.href, j, "&")
         },
         a_copyObject = function (obj) {
             var newObj = {};
@@ -902,14 +904,14 @@ window._bcvmt = {
                 }
             }
         },
-        loadScript: function (l) {
+        loadScript: function (src) {
             var j = g_document.getElementsByTagName("head")[0] || g_document.body;
-            var k = g_document.createElement("script");
-            k.id = "bcvm_script_" + new Date().getTime();
-            k.async = true;
-            k.type = "text/javascript";
-            k.src = l;
-            j.appendChild(k)
+            var k_scriptElement = g_document.createElement("script");
+            k_scriptElement.id = "bcvm_script_" + new Date().getTime();
+            k_scriptElement.async = true;
+            k_scriptElement.type = "text/javascript";
+            k_scriptElement.src = src;
+            j.appendChild(k_scriptElement)
         },
         textButtons: {},
         getPageViewer: function (E) {
@@ -933,15 +935,15 @@ window._bcvmt = {
                 z = "",
                 al = "",
                 aj, af_visitorID, aQ, v, ad, aJ = "",
-                am, ab, aM, aL = "SecureParameters",
-                A = {
+                am, ab, aM, aL_SecureParametersKey = "SecureParameters",
+                A_VisitInfoKeys = {
                     VisitRef: "vr",
                     VisitInfo: "vi",
                     VisitName: "vn",
                     VisitPhone: "vp",
                     VisitEmail: "ve"
                 },
-                j = {
+                j_ParamKeys = {
                     WindowParameters: "&",
                     OpenParameters: ","
                 },
@@ -963,7 +965,7 @@ window._bcvmt = {
                     Difficulty: "Difficulty",
                     Urgency: "Urgency"
                 },
-                t = {
+                t_ConversionKeys = {
                     ConversionCodeID: "ccid",
                     ConversionAmount: "ca",
                     ConversionRef: "cr",
@@ -982,7 +984,7 @@ window._bcvmt = {
                 },
                 Z_set = function (aW, aV, aX) {
                     p = aX;
-                    aJ = ak("wdid", aP_getParameter("WebsiteDefID") || aP_getParameter("WebsiteID")) + ak("pvid", p);
+                    aJ = ak_ParameterizeKeyValue("wdid", aP_getParameter("WebsiteDefID") || aP_getParameter("WebsiteID")) + ak_ParameterizeKeyValue("pvid", p);
                     aG(aW, aV);
                     M = true;
                     n_load()
@@ -1003,7 +1005,7 @@ window._bcvmt = {
                 aa = function (aW, aV) {
                     aG();
                     var aX = aW.indexOf("#");
-                    return aW.substring(0, aX == -1 ? aW.length : aX) + (aW.indexOf("?") == -1 ? "?" : "") + (ah ? ak("_bcvm_vrid_", "true") : "") + ak(v, aj) + ak(ad, af_visitorID) + (aV ? "" : ak("curl", J_parameters.CustomUrl) + "&" + (J_parameters.WindowParameters || "")) + (aX == -1 ? "" : aW.substring(aX))
+                    return aW.substring(0, aX == -1 ? aW.length : aX) + (aW.indexOf("?") == -1 ? "?" : "") + (ah ? ak_ParameterizeKeyValue("_bcvm_vrid_", "true") : "") + ak_ParameterizeKeyValue(v, aj) + ak_ParameterizeKeyValue(ad, af_visitorID) + (aV ? "" : ak_ParameterizeKeyValue("curl", J_parameters.CustomUrl) + "&" + (J_parameters.WindowParameters || "")) + (aX == -1 ? "" : aW.substring(aX))
                 },
                 u_link = function (aW, aV) {
                     for (var aX = 0; aX < aS.length; aX++) {
@@ -1062,7 +1064,7 @@ window._bcvmt = {
                     return a0
                 },
                 aE_setParameter = function (aX, aV, aW) {
-                    J_parameters[aX] = aW ? aV : T(J_parameters[aX], aV, j[aX])
+                    J_parameters[aX] = aW ? aV : T(J_parameters[aX], aV, j_ParamKeys[aX])
                 },
                 aP_getParameter = function (aX_key, aW) {
                     var aV = (aW ? aW[aX_key] : null) || (aW && aW.id && G[aW.id] ? G[aW.id]["parameters"][aX_key] : null) || J_parameters[aX_key] || "";
@@ -1072,22 +1074,22 @@ window._bcvmt = {
                     var aW = {};
                     var a0 = aP_getParameter("WindowParameters", aX);
                     if (a0 && a0.length) {
-                        var aZ = a0.split(j.WindowParameters);
+                        var aZ = a0.split(j_ParamKeys.WindowParameters);
                         for (var aV = 0; aV < aZ.length; aV++) {
                             var aY = aZ[aV].split("=");
                             aW[aY[0] && decodeURIComponent(aY[0])] = aY[1] && decodeURIComponent(aY[1])
                         }
                     }
-                    return aP_getParameter(a1, aX) || aW[a1] || aW[A[a1]] || aW[at[a1]]
+                    return aP_getParameter(a1, aX) || aW[a1] || aW[A_VisitInfoKeys[a1]] || aW[at[a1]]
                 },
-                ak = function (aX, aV, aW) {
-                    return aV && aV != "" ? (aW ? "?" : "&") + aX + "=" + (encodeURIComponent || escape)(typeof aV == "function" ? aV() : aV) : ""
+                ak_ParameterizeKeyValue = function (key, value, firstParameter) {
+                    return value && value != "" ? (firstParameter ? "?" : "&") + key + "=" + (encodeURIComponent || escape)(typeof value == "function" ? value() : value) : ""
                 },
-                aN = function (aY, aX) {
+                aN_ParameterizeKeyValues = function (aY, aX) {
                     var aW = "",
                         aV;
                     for (var aZ_key in aY) {
-                        aW += ak(aY[aZ_key], aP_getParameter(aZ_key, aX))
+                        aW += ak_ParameterizeKeyValue(aY[aZ_key], aP_getParameter(aZ_key, aX))
                     }
                     return aW
                 },
@@ -1113,14 +1115,14 @@ window._bcvmt = {
                 k = {
                     id: "pageView"
                 },
-                o = function (ftid, visitIndicator) {
+                o_LoadInvitationScript = function (ftid, visitIndicator) {
                     H = 0;
-                    _bcvm.loadScript("https://ci" + host + E + "/bc.inv/ci.js?resize=true&std=" + (document.compatMode == "CSS1Compat") + "&ftid=" + ftid + "&visit=" + visitIndicator + aJ + aN(at, k) + "&" + now())
+                    _bcvm.loadScript("https://ci" + host + E + "/bc.inv/ci.js?resize=true&std=" + (document.compatMode == "CSS1Compat") + "&ftid=" + ftid + "&visit=" + visitIndicator + aJ + aN_ParameterizeKeyValues(at, k) + "&" + now())
                 },
-                aT = false,
+                isCobrowseSetupped = false,
                 y = function () {
-                    if (!aT) {
-                        aT = true;
+                    if (!isCobrowseSetupped) {
+                        isCobrowseSetupped = true;
                         H = -99999999;
                         _bcvm.loadScript(ar + "vms" + host + E + "/bc.cobrowse/setup.js?wait=250" + aJ);
                         _bcvm.loadScript(ar + "vms" + host + E + "/visitor/cobrowse/script.jsp")
@@ -1132,10 +1134,10 @@ window._bcvmt = {
                 },
                 Y = function (aV) {
                     if (aV == 4) {
-                        o(29, "true")
+                        o_LoadInvitationScript(29, "true")
                     }
                     if (aV == 5) {
-                        o(51, "true")
+                        o_LoadInvitationScript(51, "true")
                     }
                     if (aV == 6) {
                         _bccb.receive()
@@ -1174,7 +1176,7 @@ window._bcvmt = {
                 },
                 R = function (aV) {
                     var aW = aV.id;
-                    return ak("bdid", aW) + ak(aW + "_html", aV.html) + ak(aW + "_roid", aV.roid) + ak(aW + "_rdid", aV.rdid) + ak(aW + (aV.tbid ? "_tbid" : aV.type == "call" ? "_pbdid" : "_cbdid"), aV.tbid || aV.bdid)
+                    return ak_ParameterizeKeyValue("bdid", aW) + ak_ParameterizeKeyValue(aW + "_html", aV.html) + ak_ParameterizeKeyValue(aW + "_roid", aV.roid) + ak_ParameterizeKeyValue(aW + "_rdid", aV.rdid) + ak_ParameterizeKeyValue(aW + (aV.tbid ? "_tbid" : aV.type == "call" ? "_pbdid" : "_cbdid"), aV.tbid || aV.bdid)
                 },
                 X_addButton = function (aW, aV) {
                     if (aV) {
@@ -1225,7 +1227,7 @@ window._bcvmt = {
                         }
                         aD_timeoutID = I_setTimeout(function () {
                             aD_timeoutID = null;
-                            o(aW == 4 ? 29 : 51, "false")
+                            o_LoadInvitationScript(aW == 4 ? 29 : 51, "false")
                         }, (aV - 1) * 1000 + 1)
                     }
                     if (aW == 1) {
@@ -1290,10 +1292,10 @@ window._bcvmt = {
                     e_window._bcct.push(aV)
                 },
                 s_conversion = function (aX, aZ, aW) {
-                    if (aZ && aX[aL]) {
+                    if (aZ && aX[aL_SecureParametersKey]) {
                         return true
                     }
-                    for (var aY in t) {
+                    for (var aY in t_ConversionKeys) {
                         aE_setParameter(aY, null, true)
                     }
                     for (var aY in aX) {
@@ -1302,7 +1304,7 @@ window._bcvmt = {
                         }
                     }
                     if (!aW) {
-                        aW = aP_getParameter(aL)
+                        aW = aP_getParameter(aL_SecureParametersKey)
                     }
                     if (typeof aW == "function") {
                         aW = aW(function (a0) {
@@ -1314,7 +1316,7 @@ window._bcvmt = {
                     }
                     if (!aZ) {
                         var aV = new Image();
-                        aV.src = u_link(ar + "vms" + host + E + "/bc.vci?" + now() + (aJ || ak("wdid", aP_getParameter("WebsiteDefID") || aP_getParameter("WebsiteID"))) + aN(A) + aN(t) + ak("secured", aW));
+                        aV.src = u_link(ar + "vms" + host + E + "/bc.vci?" + now() + (aJ || ak_ParameterizeKeyValue("wdid", aP_getParameter("WebsiteDefID") || aP_getParameter("WebsiteID"))) + aN_ParameterizeKeyValues(A_VisitInfoKeys) + aN_ParameterizeKeyValues(t_ConversionKeys) + ak_ParameterizeKeyValue("secured", aW));
                         C.push(aV)
                     }
                 },
@@ -1323,8 +1325,8 @@ window._bcvmt = {
                         aY = e_window.devicePixelRatio || (aX.deviceXDPI || 1) / (aX.logicalXDPI || 1),
                         aV = aY,
                         a1 = g_document.createElement("div"),
-                        aW = "height: 1in; left: -100%; position: absolute; top: -100%; width: 10%;";
-                    a1.setAttribute("style", aW);
+                        aW_Style = "height: 1in; left: -100%; position: absolute; top: -100%; width: 10%;";
+                    a1.setAttribute("style", aW_Style);
                     try {
                         g_document.body.appendChild(a1)
                     } catch (a0) {
@@ -1343,7 +1345,7 @@ window._bcvmt = {
                 },
                 V_pageViewed = function (aW, a4, aX, a5, a1, aZ) {
                     if (!aZ) {
-                        aZ = aP_getParameter(aL, k)
+                        aZ = aP_getParameter(aL_SecureParametersKey, k)
                     }
                     if (typeof aZ == "function") {
                         aZ = aZ(function (a7) {
@@ -1382,8 +1384,8 @@ window._bcvmt = {
                     if (!aX && !a1) {
                         p = null
                     }
-                    aJ = ak("wdid", aP_getParameter("WebsiteDefID", k) || aP_getParameter("WebsiteID", k)) + ak("pvid", p);
-                    var aV = u_link(ar + "vms" + host + E + "/bc.pv?blur=" + an + "&vm=" + !a1 + "&poll=" + (5000 + 2 * ax()) + aI() + (aX ? ak("reinvite", aX) + ak("adi", a5) : ak("vpvid", c("vpvid")) + ak("pve", a6) + ak("url", am) + ak("referrer", aM) + aN(A, k)) + ak("secured", aZ) + aJ + aN(at, k) + (a2 ? "" : aN(t)) + "&" + now());
+                    aJ = ak_ParameterizeKeyValue("wdid", aP_getParameter("WebsiteDefID", k) || aP_getParameter("WebsiteID", k)) + ak_ParameterizeKeyValue("pvid", p);
+                    var aV = u_link(ar + "vms" + host + E + "/bc.pv?blur=" + an + "&vm=" + !a1 + "&poll=" + (5000 + 2 * ax()) + aI() + (aX ? ak_ParameterizeKeyValue("reinvite", aX) + ak_ParameterizeKeyValue("adi", a5) : ak_ParameterizeKeyValue("vpvid", c("vpvid")) + ak_ParameterizeKeyValue("pve", a6) + ak_ParameterizeKeyValue("url", am) + ak_ParameterizeKeyValue("referrer", aM) + aN_ParameterizeKeyValues(A_VisitInfoKeys, k)) + ak_ParameterizeKeyValue("secured", aZ) + aJ + aN_ParameterizeKeyValues(at, k) + (a2 ? "" : aN_ParameterizeKeyValues(t_ConversionKeys)) + "&" + now());
                     _bcvm.loadScript(aV.replace("?", "?script=true&securevm=true&") + (aX ? "" : "&hasbutton=" + ag + al));
                     z = al;
                     if (!a1) {
@@ -1490,8 +1492,8 @@ window._bcvmt = {
                     if (hashTagIndex + 1 && !(hashTagIndex > leftBracketIndex && hashTagIndex < rightBracketIndex)) {
                         var E = k.split("#"),
                             O = E[0],
-                            B = E[1],
-                            x = g_document.getElementById(B);
+                            B_elementId = E[1],
+                            x = g_document.getElementById(B_elementId);
                         if (!x || (O && x.nodeName.toLowerCase() != O)) {
                             continue COMMA
                         }
